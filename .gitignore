@@ -1,0 +1,7 @@
+.venv/
+.selected-audio
+.audio-probe.json
+__pycache__/
+*.log
+model-cache.json
+.self-test/

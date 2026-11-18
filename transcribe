@@ -1,0 +1,12 @@
+#!/bin/zsh
+set -eu
+umask 077
+SCRIPT_DIR=${0:A:h}
+export PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export HF_HUB_OFFLINE=1
+export HF_HUB_DISABLE_TELEMETRY=1
+export DO_NOT_TRACK=1
+export TOKENIZERS_PARALLELISM=false
+# Enforce local-only operation for Python, FFmpeg, and all child processes.
+exec /usr/bin/sandbox-exec -p '(version 1) (allow default) (deny network*)' \
+  /usr/bin/caffeinate -i "$SCRIPT_DIR/.venv/bin/python" -u "$SCRIPT_DIR/transcribe.py" "$@"
